@@ -1,7 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera(const QPoint& origin)
-	: mOrigin(origin)
+Camera::Camera(const QPoint& origin) : mOrigin(origin)
 {
 }
 
@@ -18,17 +17,19 @@ void Camera::Zoom(qreal factor, const QPointF& center)
 	mViewTransform.UpdateTranslation(-center);
 	mViewTransform.UpdateScale(factor);
 	mViewTransform.UpdateTranslation(center);
-	
+
 	mModelTransform.UpdateTranslation(center);
 	mModelTransform.UpdateScale(1 / factor);
 	mModelTransform.UpdateTranslation(-center);
 }
 
-QPointF Camera::GetViewTransform(const QPointF& modelPoint) const {
+QPointF Camera::GetViewTransform(const QPointF& modelPoint) const
+{
 	return mViewTransform.Transform(modelPoint);
 }
 
-QPointF Camera::FromViewTransform(const QPointF& viewPoint) const {
+QPointF Camera::FromViewTransform(const QPointF& viewPoint) const
+{
 	return mModelTransform.Transform(viewPoint);
 }
 

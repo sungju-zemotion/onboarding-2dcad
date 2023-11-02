@@ -37,10 +37,9 @@ private:
 	Camera mCamera;
 	QPainter* mPainter = nullptr;
 
-	void Render(const Camera& camera);		// currently running a loop; render queue could be used instead
+	void Render(const Camera& camera); // currently running a loop; render queue could be used instead
 	void DrawGrid();
 
 public slots:
 	void ShowContextMenu(const QPoint& point);
 };
-

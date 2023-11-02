@@ -26,8 +26,7 @@ Line* LoadLine(const QJsonObject& json, const QMap<ShapeId, Point*>& pointTable)
 	return new Line(lineId, color, startPoint, endPoint);
 }
 
-Line::Line(ShapeId id, const QColor& color, std::shared_ptr<Point> start, std::shared_ptr<Point> end)
-	: Shape(id, color), mStart(start), mEnd(end)
+Line::Line(ShapeId id, const QColor& color, std::shared_ptr<Point> start, std::shared_ptr<Point> end) : Shape(id, color), mStart(start), mEnd(end)
 {
 	if (IsInvalid(start.get(), end.get()))
 	{
@@ -71,18 +70,19 @@ void Line::Render(QPainter* painter, const Camera& camera)
 	mEnd->Render(painter, camera);
 }
 
-bool Line::IsInvalid(Point* start, Point* end) { return start == end; }
+bool Line::IsInvalid(Point* start, Point* end)
+{
+	return start == end;
+}
 
 void Line::Rotate(qreal angle, const QPointF& center)
 {
 	// TODO: consider when using zoom & panning later
 	QPointF rotCenter = center;
+
 	if (center == QPointF{ -1, -1 })
 	{
-		rotCenter = QPointF{
-			(mStart->GetX() + mEnd->GetX()) / 2,
-			(mStart->GetY() + mEnd->GetY()) / 2
-		};
+		rotCenter = QPointF{ (mStart->GetX() + mEnd->GetX()) / 2, (mStart->GetY() + mEnd->GetY()) / 2 };
 	}
 
 	mStart->UpdateTranslate(-rotCenter);
@@ -105,6 +105,7 @@ void Line::Scale(qreal factor, const QPointF& center)
 {
 	// TODO: consider when using zoom & panning later
 	QPointF scaleCenter = center;
+
 	if (center == QPointF{ -1, -1 })
 	{
 		scaleCenter = GetCenter();
@@ -121,16 +122,14 @@ void Line::Scale(qreal factor, const QPointF& center)
 
 QPointF Line::GetCenter() const
 {
-	return QPointF{
-		(mStart->GetX() + mEnd->GetX()) / 2,
-		(mStart->GetY() + mEnd->GetY()) / 2
-	};
+	return QPointF{ (mStart->GetX() + mEnd->GetX()) / 2, (mStart->GetY() + mEnd->GetY()) / 2 };
 }
 
 void Line::RenderSurroundingRect(QPainter* painter, const Camera& camera)
 {
 	QPointF v1 = mEnd->GetViewPoint(camera) - mStart->GetViewPoint(camera);
 	const qreal length = std::sqrt(v1.x() * v1.x() + v1.y() * v1.y());
+
 	if (length == 0)
 	{
 		return;
@@ -144,7 +143,6 @@ void Line::RenderSurroundingRect(QPainter* painter, const Camera& camera)
 	QPointF y = x - 2 * v2 * padding;
 	QPointF z = (v1 - v2) * padding + mEnd->GetViewPoint(camera);
 	QPointF u = z + 2 * v2 * padding;
-
 
 	painter->setPen(Qt::DotLine);
 	painter->drawPolyline({ x, y, z, u, x });

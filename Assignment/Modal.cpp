@@ -1,8 +1,7 @@
-#include "Modal.h"	
+#include "Modal.h"
 
 PropertiesModal::PropertiesModal(Shape* shape, QWidget* parent)
-	: QDialog(parent), mShape(shape), mColorModal(new QColorDialog(this))
-	, mColorButton(new QPushButton(this)), mCurrentColor(shape->GetColor())
+	: QDialog(parent), mShape(shape), mColorModal(new QColorDialog(this)), mColorButton(new QPushButton(this)), mCurrentColor(shape->GetColor())
 {
 	QVBoxLayout* mainLayout = new QVBoxLayout;
 
@@ -38,8 +37,11 @@ PropertiesModal::PropertiesModal(Shape* shape, QWidget* parent)
 	connect(mColorModal, &QColorDialog::colorSelected, [this]() {
 		mColorButton->setText(QVariant(mColorModal->currentColor()).toString());
 		mCurrentColor = mColorModal->currentColor();
-		});
-	connect(okButton, &QPushButton::clicked, [this]() { ApplyChanges(); close(); });
+	});
+	connect(okButton, &QPushButton::clicked, [this]() {
+		ApplyChanges();
+		close();
+	});
 	connect(cancelButton, &QPushButton::clicked, [this]() { close(); });
 
 	// run the modal
@@ -53,4 +55,3 @@ void PropertiesModal::ApplyChanges()
 
 	accept();
 }
-

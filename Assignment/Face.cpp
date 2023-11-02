@@ -34,7 +34,6 @@ Face* LoadFace(const QJsonObject& json, QMap<ShapeId, Point*>& pointTable)
 	return new Face(id, color, points);
 }
 
-
 static QPointF normalize(const QPointF& point)
 {
 	const qreal size = std::sqrt(point.x() * point.x() + point.y() * point.y());
@@ -70,8 +69,7 @@ bool Face::IsInvalid(const QVector<Line*>& lines)
 	return curr != firstPoint;
 }
 
-Face::Face(ShapeId id, const QColor& color, const QVector<Line*>& lines)
-	: Shape(id, color)
+Face::Face(ShapeId id, const QColor& color, const QVector<Line*>& lines) : Shape(id, color)
 {
 	if (Face::IsInvalid(lines))
 	{
@@ -83,16 +81,12 @@ Face::Face(ShapeId id, const QColor& color, const QVector<Line*>& lines)
 	{
 		mPoints.append(line->GetStartPoint());
 
-		polygon << QPointF(
-			line->GetStartPoint()->GetX(),
-			line->GetStartPoint()->GetY()
-		);
+		polygon << QPointF(line->GetStartPoint()->GetX(), line->GetStartPoint()->GetY());
 	}
 	mPolygon = polygon;
 }
 
-Face::Face(ShapeId id, const QColor& color, const QVector<Point*>& points)
-	: Shape(id, color)
+Face::Face(ShapeId id, const QColor& color, const QVector<Point*>& points) : Shape(id, color)
 {
 	QPolygonF polygon;
 	for (Point* point : points)
@@ -109,13 +103,13 @@ bool Face::HitTest(qreal x, qreal y, const Camera& camera)
 {
 	int ret = 0;
 
-	for (size_t i = 0; i < mPoints.size(); i++) {
+	for (size_t i = 0; i < mPoints.size(); i++)
+	{
 		QPointF curr = mPoints[i]->GetViewPoint(camera);
 		QPointF next = mPoints[(i + 1) % mPoints.size()]->GetViewPoint(camera);
 
 		// (y is between cY and nY)  and (x is on the left side of the intersection)
-		if (((y < curr.y()) != (y < next.y()))
-			&& (x < (next.x() - curr.x()) * (y - curr.y()) / (next.y() - curr.y()) + curr.x()))
+		if (((y < curr.y()) != (y < next.y())) && (x < (next.x() - curr.x()) * (y - curr.y()) / (next.y() - curr.y()) + curr.x()))
 		{
 			ret++;
 		}
@@ -230,4 +224,3 @@ void Face::ModelTranslate(const QPointF& move)
 		point->ModelTranslate(move);
 	}
 }
-

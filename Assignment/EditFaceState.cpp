@@ -12,9 +12,7 @@ void EditFaceState::HandleMousePressEvent(QMouseEvent* event, const Camera& came
 
 	if (face != mFace)
 	{
-		Enter(StateInfo::CAMERA_MOVE, []() {
-			return new CameraMoveState;
-			});
+		Enter(StateInfo::CAMERA_MOVE, []() { return new CameraMoveState; });
 	}
 }
 
@@ -22,7 +20,8 @@ void EditFaceState::HandleMouseMoveEvent(QMouseEvent* event, const Camera& camer
 {
 	Scene* scene = Scene::GetInstance();
 	std::optional<QPointF> startPoint = SceneState::GetDragEnterPoint();
-	if (startPoint.has_value() && (scene->GetCurrentFocus() > 0))		// check whether there is a currently selected shape
+
+	if (startPoint.has_value() && (scene->GetCurrentFocus() > 0)) // check whether there is a currently selected shape
 	{
 		QPointF viewMove = event->position() - startPoint.value();
 		QPointF modelMove = 1 / camera.GetViewTransformScaleFactor() * viewMove;
@@ -36,7 +35,5 @@ void EditFaceState::HandleMouseReleaseEvent(QMouseEvent* event, const Camera&)
 {
 	SetDragEnterPoint(std::nullopt);
 	Scene::GetInstance()->SetCurrentFocus(-1);
-	Enter(StateInfo::CAMERA_MOVE, []() {
-		return new CameraMoveState;
-		});
+	Enter(StateInfo::CAMERA_MOVE, []() { return new CameraMoveState; });
 }

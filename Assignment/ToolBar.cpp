@@ -1,7 +1,6 @@
 #include "ToolBar.h"
 
-CreateToolBar::CreateToolBar(QWidget* parent)
-	: QToolBar(parent)
+CreateToolBar::CreateToolBar(QWidget* parent) : QToolBar(parent)
 {
 	// actions
 	QAction* createLine = new QAction("Line", this);
@@ -14,8 +13,7 @@ CreateToolBar::CreateToolBar(QWidget* parent)
 	mActionCreateFace = createFace;
 }
 
-SelectToolBar::SelectToolBar(QWidget* parent)
-	: QToolBar(parent)
+SelectToolBar::SelectToolBar(QWidget* parent) : QToolBar(parent)
 {
 	// actions
 	QAction* selectLine = new QAction("Line", this);
@@ -26,4 +24,3 @@ SelectToolBar::SelectToolBar(QWidget* parent)
 	addAction(selectFace);
 	mActionSelectFace = selectFace;
 }
-

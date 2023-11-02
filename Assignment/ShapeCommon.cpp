@@ -27,13 +27,11 @@ void SavePoint(const Point* point, QJsonArray& array)
 	array.append(savedPoint);
 }
 
-Shape::Shape(ShapeId id, const QColor& color)
-	: mId(id), mColor(color)
+Shape::Shape(ShapeId id, const QColor& color) : mId(id), mColor(color)
 {
 }
 
-Point::Point(ShapeId id, qreal x, qreal y)
-	: mX(x), mY(y), Shape(id, Qt::blue)
+Point::Point(ShapeId id, qreal x, qreal y) : mX(x), mY(y), Shape(id, Qt::blue)
 {
 }
 
@@ -41,15 +39,12 @@ bool Point::HitTest(qreal x, qreal y, const Camera& camera)
 {
 	const QPointF point = GetViewPoint(camera);
 	const qreal padding = 10;
-	return (x - padding < point.x())
-		&& (point.x() < x + padding)
-		&& (y - padding < point.y())
-		&& (point.y() < y + padding);
+
+	return (x - padding < point.x()) && (point.x() < x + padding) && (y - padding < point.y()) && (point.y() < y + padding);
 }
 
 void Point::Render(QPainter* painter, const Camera& camera)
 {
-
 	RenderPoint(painter, GetViewPoint(camera), GetColor());
 }
 

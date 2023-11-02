@@ -17,7 +17,8 @@ MainMenuBar::MainMenuBar(QWidget* parent) : QMenuBar(parent)
 	// view menu
 	QMenu* viewMenu = new QMenu("view", this);
 	addAction(viewMenu->menuAction());
-
 }
 
-MainMenuBar::~MainMenuBar() {}
+MainMenuBar::~MainMenuBar()
+{
+}

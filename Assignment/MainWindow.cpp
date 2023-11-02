@@ -5,92 +5,46 @@
 // remark: temporary
 #include "File.h"
 
-MainWindow::MainWindow(QWidget* parent)
-	: QMainWindow(parent), mUi(new MainWindowUI(this))
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), mUi(new MainWindowUI(this))
 {
-	SceneStateMachine::GetInstance()->SetCurrentState(StateInfo::CAMERA_MOVE, []() {
-		return new CameraMoveState;
-		});
+	SceneStateMachine::GetInstance()->SetCurrentState(StateInfo::CAMERA_MOVE, []() { return new CameraMoveState; });
 	mUi->SetupUI();
 	SetupSignals();
 }
 
-MainWindow::~MainWindow() {}
+MainWindow::~MainWindow()
+{
+}
 
 void MainWindow::SetupSignals()
 {
 	// file save, file load
 	// TODO: implement
-	connect(mUi->mMainMenuBar->mActionSave, &QAction::triggered, [this]()
-		{
-			QJsonObject file;
-			Scene::GetInstance()->Save(file);
+	connect(mUi->mMainMenuBar->mActionSave, &QAction::triggered, [this]() {
+		QJsonObject file;
+		Scene::GetInstance()->Save(file);
 
-			SaveJson(file, "test.json");
-		}
-	);
-	connect(mUi->mMainMenuBar->mActionLoad, &QAction::triggered, [this]()
-		{
-			QJsonObject file = LoadJson("test.json");
-			Scene::GetInstance()->Load(file);
-		}
-	);
+		SaveJson(file, "test.json");
+	});
+	connect(mUi->mMainMenuBar->mActionLoad, &QAction::triggered, [this]() {
+		QJsonObject file = LoadJson("test.json");
+		Scene::GetInstance()->Load(file);
+	});
 
-	connect(mUi->mCreateToolBar->mActionCreateLine, &QAction::triggered, [this]()
-		{
-			SceneStateMachine::GetInstance()->SetCurrentState(
-				StateInfo::DRAW_LINE,
-				[]() {
-					return new DrawLineState;
-				}
-			);
-		}
-	);
+	connect(mUi->mCreateToolBar->mActionCreateLine, &QAction::triggered, [this]() { SceneStateMachine::GetInstance()->SetCurrentState(StateInfo::DRAW_LINE, []() { return new DrawLineState; }); });
 
-	connect(mUi->mSelectToolBar->mActionSelectLine, &QAction::triggered, [this]()
-		{
-			SceneStateMachine::GetInstance()->SetCurrentState(
-				StateInfo::SELECT_LINE,
-				[]() {
-					return new SelectLineState;
-				}
-			);
-		}
-	);
+	connect(mUi->mSelectToolBar->mActionSelectLine, &QAction::triggered, [this]() { SceneStateMachine::GetInstance()->SetCurrentState(StateInfo::SELECT_LINE, []() { return new SelectLineState; }); });
 
-	connect(mUi->mCreateToolBar->mActionCreateFace, &QAction::triggered, [this]()
-		{
-			SceneStateMachine::GetInstance()->SetCurrentState(
-				StateInfo::DRAW_FACE,
-				[]() {
-					return new DrawFaceState;
-				}
-			);
-		}
-	);
+	connect(mUi->mCreateToolBar->mActionCreateFace, &QAction::triggered, [this]() { SceneStateMachine::GetInstance()->SetCurrentState(StateInfo::DRAW_FACE, []() { return new DrawFaceState; }); });
 
-	connect(mUi->mSelectToolBar->mActionSelectFace, &QAction::triggered, [this]()
-		{
-			SceneStateMachine::GetInstance()->SetCurrentState(
-				StateInfo::SELECT_FACE,
-				[]() {
-					return new SelectFaceState;
-				}
-			);
-		}
-	);
+	connect(mUi->mSelectToolBar->mActionSelectFace, &QAction::triggered, [this]() { SceneStateMachine::GetInstance()->SetCurrentState(StateInfo::SELECT_FACE, []() { return new SelectFaceState; }); });
 
 	mUi->mViewPort->setContextMenuPolicy(Qt::CustomContextMenu);
-	connect(
-		mUi->mViewPort,
-		&ViewPort::customContextMenuRequested,
-		[this](const QPoint& point) {
-			mUi->mViewPort->ShowContextMenu(point);
-		}
-	);
+	connect(mUi->mViewPort, &ViewPort::customContextMenuRequested, [this](const QPoint& point) { mUi->mViewPort->ShowContextMenu(point); });
 }
 
-void MainWindowUI::SetupUI() {
+void MainWindowUI::SetupUI()
+{
 	mMainWindow->resize(800, 600);
 	mMainWindow->setWindowTitle("Assignment Window");
 
@@ -117,7 +71,6 @@ CreateToolBar* MainWindowUI::CreateToolBarFactory()
 	return toolBar;
 }
 
-
 SelectToolBar* MainWindowUI::SelectToolBarFactory()
 {
 	SelectToolBar* toolBar = new SelectToolBar(mMainWindow);
@@ -130,4 +83,3 @@ ViewPort* MainWindowUI::ViewPortFactory()
 {
 	return new ViewPort(mMainWindow);
 }
-

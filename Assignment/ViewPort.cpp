@@ -6,8 +6,7 @@
 #include "SceneState.h"
 #include "SceneStateMachine.h"
 
-ViewPort::ViewPort(QWidget* parent)
-	: QWidget(parent), mPainter(new QPainter(this))
+ViewPort::ViewPort(QWidget* parent) : QWidget(parent), mPainter(new QPainter(this))
 {
 	setGeometry(100, 100, WIDTH, HEIGHT);
 	setMinimumSize(HEIGHT, HEIGHT);
@@ -37,7 +36,6 @@ void ViewPort::ShowContextMenu(const QPoint& point)
 	QAction* deleteAction = new QAction("delete", this);
 	QAction* propertiesAction = new QAction("properties", this);
 
-
 	Shape* target = Scene::GetInstance()->HitTestLine(point, mCamera);
 
 	if (target == nullptr)
@@ -53,7 +51,7 @@ void ViewPort::ShowContextMenu(const QPoint& point)
 	connect(propertiesAction, &QAction::triggered, [this, target]() {
 		PropertiesModal modal(target, this);
 		modal.exec();
-		});
+	});
 
 	menu.addAction(copyAction);
 	menu.addAction(deleteAction);
@@ -105,4 +103,3 @@ void ViewPort::DrawGrid()
 		mPainter->drawLine(offset.y(), j, WIDTH, j);
 	}
 }
-

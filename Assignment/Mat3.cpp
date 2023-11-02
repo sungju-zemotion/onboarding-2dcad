@@ -1,12 +1,13 @@
 #include "Mat3.h"
 
-inline static qreal Dot(const Vec3& v1, const Vec3& v2) {
+inline static qreal Dot(const Vec3& v1, const Vec3& v2)
+{
 	return v1.x1 * v2.x1 + v1.x2 * v2.x2 + v1.x3 * v2.x3;
 }
 
-Mat3::Mat3(const Vec3& row1, const Vec3& row2, const Vec3& row3)
-	: mRow1(row1), mRow2(row2), mRow3(row3)
-{}
+Mat3::Mat3(const Vec3& row1, const Vec3& row2, const Vec3& row3) : mRow1(row1), mRow2(row2), mRow3(row3)
+{
+}
 
 void Mat3::MultiplyVec3(Vec3& v) const
 {

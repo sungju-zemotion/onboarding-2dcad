@@ -22,13 +22,14 @@ private:
 	MainWindowUI* mUi = nullptr;
 
 	void SetupSignals();
-
 };
 
 class MainWindowUI
 {
 public:
-	MainWindowUI(QMainWindow* mainWindow) : mMainWindow(mainWindow) {}
+	MainWindowUI(QMainWindow* mainWindow) : mMainWindow(mainWindow)
+	{
+	}
 
 	void SetupUI();
 

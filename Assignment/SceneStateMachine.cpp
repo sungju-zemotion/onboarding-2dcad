@@ -12,7 +12,7 @@ SceneStateMachine* SceneStateMachine::GetInstance()
 	return gInstance;
 }
 
-void SceneStateMachine::SetCurrentState(StateInfo state, std::function<SceneState* ()> stateFactory)
+void SceneStateMachine::SetCurrentState(StateInfo state, std::function<SceneState*()> stateFactory)
 {
 	if (mStates.find(state) == mStates.end())
 	{
@@ -22,4 +22,3 @@ void SceneStateMachine::SetCurrentState(StateInfo state, std::function<SceneStat
 	mCurrentState = mStates[state];
 	assert(mCurrentState);
 }
-

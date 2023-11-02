@@ -5,7 +5,8 @@
 
 #include "Mat3.h"
 
-class TransformMat3 {
+class TransformMat3
+{
 public:
 	TransformMat3();
 
@@ -16,11 +17,12 @@ public:
 	QPointF Transform(const QPointF& point) const;
 
 	void ResetTransform();
-	qreal GetScaleFactor() const { return scaleFactor; }
+	qreal GetScaleFactor() const
+	{
+		return scaleFactor;
+	}
 
 private:
 	Mat3 mMatrix;
 	qreal scaleFactor = 1;
 };
-
-

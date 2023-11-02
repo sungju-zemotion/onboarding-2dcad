@@ -17,6 +17,7 @@ Point* Scene::HitTestPoint(const QPointF& viewPoint, const Camera& camera) const
 	for (LineTable::const_iterator it = mLines.begin(); it != mLines.end(); it++)
 	{
 		Point* start = (*it)->GetStartPoint().get();
+
 		if (start->HitTest(viewPoint.x(), viewPoint.y(), camera))
 		{
 			return start;
@@ -115,6 +116,7 @@ void Scene::Save(QJsonObject& json)
 		SaveLine(*it, lineArray);
 		const Point* startPoint = (*it)->GetStartPoint().get();
 		ShapeId startPointId = startPoint->GetId();
+
 		if (!pointIdSet.contains(startPointId))
 		{
 			pointIdSet.insert(startPointId);
@@ -123,6 +125,7 @@ void Scene::Save(QJsonObject& json)
 
 		const Point* endPoint = (*it)->GetEndPoint().get();
 		ShapeId endPointId = endPoint->GetId();
+
 		if (!pointIdSet.contains(endPointId))
 		{
 			pointIdSet.insert(endPointId);
@@ -130,8 +133,9 @@ void Scene::Save(QJsonObject& json)
 		}
 	}
 
-	// step 2: save the faces 
+	// step 2: save the faces
 	using PointIterator = QVector<std::shared_ptr<Point>>::const_iterator;
+
 	for (FaceTable::const_iterator it = GetFaceBegin(); it != GetFaceEnd(); it++)
 	{
 		SaveFace(*it, faceArray);
@@ -149,6 +153,7 @@ void Scene::Load(const QJsonObject& json)
 
 	// load points
 	const QJsonArray pointArray = json["points"].toArray();
+
 	for (const QJsonValue& value : pointArray)
 	{
 		Point* point = LoadPoint(value.toObject());
@@ -157,6 +162,7 @@ void Scene::Load(const QJsonObject& json)
 
 	// load lines
 	const QJsonArray lineArray = json["lines"].toArray();
+
 	for (const QJsonValue& value : lineArray)
 	{
 		scene->AddLine(LoadLine(value.toObject(), tempPoints));
@@ -164,6 +170,7 @@ void Scene::Load(const QJsonObject& json)
 
 	// load faces
 	const QJsonArray faceArray = json["faces"].toArray();
+
 	for (const QJsonValue& value : faceArray)
 	{
 		scene->AddFace(LoadFace(value.toObject(), tempPoints));

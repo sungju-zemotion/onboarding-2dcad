@@ -7,7 +7,6 @@
 // internal
 #include "ShapeCommon.h"
 
-
 class PropertiesModal : public QDialog
 {
 public:
@@ -21,4 +20,3 @@ private:
 
 	void ApplyChanges();
 };
-

@@ -30,7 +30,7 @@ void SceneState::Render(QPainter* painter, const Camera& camera)
 void SceneState::HandleMouseWheelEvent(QWheelEvent* event, Camera* camera)
 {
 	const qreal rollData = event->angleDelta().y(); // 0, 120 for usual mouses for upper direction
-	const qreal roll = rollData > 0 ? rollData / 100 : -100 / rollData;
+	const qreal roll = rollData > 0 ? rollData / 1000 : -1000 / rollData;
 
 	camera->Zoom(roll, event->position());
 }

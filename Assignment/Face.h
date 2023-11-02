@@ -11,8 +11,14 @@
 class Face : public Shape
 {
 public:
-	QVector<std::shared_ptr<Point>>::const_iterator GetBeginPoint() const { return mPoints.begin(); }
-	QVector<std::shared_ptr<Point>>::const_iterator GetEndPoint() const { return mPoints.end(); }
+	QVector<std::shared_ptr<Point>>::const_iterator GetBeginPoint() const
+	{
+		return mPoints.begin();
+	}
+	QVector<std::shared_ptr<Point>>::const_iterator GetEndPoint() const
+	{
+		return mPoints.end();
+	}
 
 	Face(ShapeId id, const QColor& color, const QVector<Line*>& lines);
 	Face(ShapeId id, const QColor& color, const QVector<Point*>& points);
@@ -40,8 +46,6 @@ private:
 
 	QVector<std::shared_ptr<Point>> mPoints;
 	QPolygonF mPolygon;
-
 };
 
 Face* LoadFace(const QJsonObject& json, QMap<ShapeId, Point*>& pointTable);
-

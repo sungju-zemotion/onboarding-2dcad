@@ -32,7 +32,5 @@ void DrawLineState::HandleMouseReleaseEvent(QMouseEvent* event, const Camera&)
 	SetDragEnterPoint(std::nullopt);
 
 	mTempLine = nullptr;
-	Enter(StateInfo::CAMERA_MOVE, []() {
-		return new CameraMoveState;
-		});
+	Enter(StateInfo::CAMERA_MOVE, []() { return new CameraMoveState; });
 }

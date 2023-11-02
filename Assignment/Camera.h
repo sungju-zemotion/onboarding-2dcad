@@ -18,12 +18,14 @@ public:
 	QPointF GetViewTransform(const QPointF& modelPoint) const;
 	QPointF FromViewTransform(const QPointF& viewPoint) const;
 
-	qreal GetViewTransformScaleFactor() const { return mViewTransform.GetScaleFactor(); }
+	qreal GetViewTransformScaleFactor() const
+	{
+		return mViewTransform.GetScaleFactor();
+	}
 	void ResetView();
 
 private:
 	QPoint mOrigin;
-	TransformMat3 mViewTransform;		// from model(world) to view
-	TransformMat3 mModelTransform;		// from view to model(world)
+	TransformMat3 mViewTransform; // from model(world) to view
+	TransformMat3 mModelTransform; // from view to model(world)
 };
-

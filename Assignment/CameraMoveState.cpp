@@ -27,4 +27,3 @@ void CameraMoveState::HandleMouseReleaseEvent(QMouseEvent* event, const Camera&)
 {
 	SetDragEnterPoint(std::nullopt);
 }
-

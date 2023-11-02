@@ -14,17 +14,12 @@
 #include "Camera.h"
 #include "SceneStateMachine.h"
 
-
 Line* DrawInitialLine(const QPointF& startPoint, const Camera& camera);
 
-Line* DrawConnectedLine(
-	std::shared_ptr<Point> lastPoint,
-	const QPointF& currPoint,
-	const Camera& camera
-);
+Line* DrawConnectedLine(std::shared_ptr<Point> lastPoint, const QPointF& currPoint, const Camera& camera);
 
-class SceneState {
-
+class SceneState
+{
 public:
 	virtual ~SceneState() = default;
 
@@ -33,7 +28,7 @@ public:
 
 	// common event handler
 	virtual void HandleMousePressEvent(QMouseEvent* event, const Camera& camera) = 0;
-	virtual void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) = 0;		// have its own version below
+	virtual void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) = 0; // have its own version below
 	virtual void HandleMouseReleaseEvent(QMouseEvent* event, const Camera& camera) = 0;
 	void HandleMouseWheelEvent(QWheelEvent* event, Camera* camera);
 
@@ -43,7 +38,8 @@ protected:
 	static std::optional<QPointF> GetDragEnterPoint();
 	static void SetDragEnterPoint(const std::optional<QPointF>& point);
 
-	virtual void Enter(StateInfo info, std::function<SceneState* ()> stateFactory) {
+	virtual void Enter(StateInfo info, std::function<SceneState*()> stateFactory)
+	{
 		SceneStateMachine::GetInstance()->SetCurrentState(info, stateFactory);
 	}
 
@@ -71,7 +67,10 @@ public:
 	void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) override;
 	void HandleMouseReleaseEvent(QMouseEvent* event, const Camera&) override;
 
-	void SetPoint(Point* point) { mPoint = point; }
+	void SetPoint(Point* point)
+	{
+		mPoint = point;
+	}
 
 private:
 	Point* mPoint = nullptr;
@@ -86,7 +85,10 @@ public:
 	void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) override;
 	void HandleMouseReleaseEvent(QMouseEvent* event, const Camera&) override;
 
-	void SetLine(Line* line) { mLine = line; }
+	void SetLine(Line* line)
+	{
+		mLine = line;
+	}
 
 private:
 	Line* mLine = nullptr;
@@ -101,7 +103,10 @@ public:
 	void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) override;
 	void HandleMouseReleaseEvent(QMouseEvent* event, const Camera&) override;
 
-	void SetFace(Face* face) { mFace = face; }
+	void SetFace(Face* face)
+	{
+		mFace = face;
+	}
 
 private:
 	Face* mFace = nullptr;
@@ -113,8 +118,12 @@ public:
 	void Render(QPainter* painter, const Camera& camera) override;
 
 	void HandleMousePressEvent(QMouseEvent* event, const Camera& camera) override;
-	void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) override {}		// not necessary
-	void HandleMouseReleaseEvent(QMouseEvent* event, const Camera&) {}					// not necessary
+	void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) override
+	{
+	} // not necessary
+	void HandleMouseReleaseEvent(QMouseEvent* event, const Camera&)
+	{
+	} // not necessary
 };
 
 class SelectFaceState : public SceneState
@@ -123,8 +132,12 @@ public:
 	void Render(QPainter* painter, const Camera& camera) override;
 
 	void HandleMousePressEvent(QMouseEvent* event, const Camera& camera) override;
-	void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) override {}		// not necessary
-	void HandleMouseReleaseEvent(QMouseEvent* event, const Camera&) override {}			// not necessary
+	void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) override
+	{
+	} // not necessary
+	void HandleMouseReleaseEvent(QMouseEvent* event, const Camera&) override
+	{
+	} // not necessary
 };
 
 class DrawLineState : public SceneState
@@ -148,4 +161,3 @@ public:
 private:
 	QVector<Line*> mTempLines;
 };
-
