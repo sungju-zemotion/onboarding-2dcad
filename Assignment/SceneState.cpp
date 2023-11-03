@@ -12,7 +12,7 @@ void SceneState::SetDragEnterPoint(const std::optional<QPointF>& point)
 
 std::optional<QPointF> SceneState::gDragEnterPoint = std::nullopt;
 
-void SceneState::Render(QPainter* painter, const Camera& camera)
+void SceneState::Render(QPainter* painter, const Camera& camera) const
 {
 	Scene* scene = Scene::GetInstance();
 
@@ -30,7 +30,7 @@ void SceneState::Render(QPainter* painter, const Camera& camera)
 void SceneState::HandleMouseWheelEvent(QWheelEvent* event, Camera* camera)
 {
 	const qreal rollData = event->angleDelta().y(); // 0, 120 for usual mouses for upper direction
-	const qreal roll = rollData > 0 ? rollData / 1000 : -1000 / rollData;
+	const qreal roll = rollData > 0 ? 1.2 : 1/1.2;
 
 	camera->Zoom(roll, event->position());
 }

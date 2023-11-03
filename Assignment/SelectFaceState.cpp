@@ -1,6 +1,6 @@
 #include "SceneState.h"
 
-void SelectFaceState::Render(QPainter* painter, const Camera& camera)
+void SelectFaceState::Render(QPainter* painter, const Camera& camera) const
 {
 	SceneState::Render(painter, camera);
 }

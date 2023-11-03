@@ -14,7 +14,7 @@ ViewPort::ViewPort(QWidget* parent) : QWidget(parent), mPainter(new QPainter(thi
 	mSceneStateMachine = SceneStateMachine::GetInstance();
 }
 
-void ViewPort::Render(const Camera& camera)
+void ViewPort::Render(const Camera& camera) const
 {
 	SceneStateMachine::GetInstance()->GetCurrentState()->Render(mPainter, camera);
 }
@@ -84,7 +84,7 @@ void ViewPort::wheelEvent(QWheelEvent* event)
 	currentState->HandleMouseWheelEvent(event, &mCamera);
 }
 
-void ViewPort::DrawGrid()
+void ViewPort::DrawGrid() const
 {
 	QPen gridPen;
 	gridPen.setColor(Qt::gray);

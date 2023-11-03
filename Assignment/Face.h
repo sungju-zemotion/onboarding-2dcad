@@ -23,11 +23,11 @@ public:
 	Face(ShapeId id, const QColor& color, const QVector<Line*>& lines);
 	Face(ShapeId id, const QColor& color, const QVector<Point*>& points);
 
-	bool HitTest(qreal x, qreal y, const Camera& camera) override;
+	bool HitTest(qreal x, qreal y, const Camera& camera) const override;
 
-	void Render(QPainter* painter, const Camera& camera) override;
-	// TODO: implement following
-	void RenderSurroundingRect(QPainter* painter, const Camera& camera) override;
+	void Render(QPainter* painter, const Camera& camera) const override;
+
+	void RenderSurroundingRect(QPainter* painter, const Camera& camera) const override;
 
 	void Rotate(qreal angle, const QPointF& center = { -1, -1 }) override;
 	void Translate(const QPointF& move) override;
@@ -39,8 +39,6 @@ public:
 
 private:
 	static bool IsInvalid(const QVector<Line*>& lines);
-
-	void UpdatePolygon(const Camera& camera);
 
 	QPointF GetCenter() const;
 

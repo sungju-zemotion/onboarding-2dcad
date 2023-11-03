@@ -35,7 +35,7 @@ Point::Point(ShapeId id, qreal x, qreal y) : mX(x), mY(y), Shape(id, Qt::blue)
 {
 }
 
-bool Point::HitTest(qreal x, qreal y, const Camera& camera)
+bool Point::HitTest(qreal x, qreal y, const Camera& camera) const
 {
 	const QPointF point = GetViewPoint(camera);
 	const qreal padding = 10;
@@ -43,7 +43,7 @@ bool Point::HitTest(qreal x, qreal y, const Camera& camera)
 	return (x - padding < point.x()) && (point.x() < x + padding) && (y - padding < point.y()) && (point.y() < y + padding);
 }
 
-void Point::Render(QPainter* painter, const Camera& camera)
+void Point::Render(QPainter* painter, const Camera& camera) const
 {
 	RenderPoint(painter, GetViewPoint(camera), GetColor());
 }
@@ -60,7 +60,7 @@ QPointF Point::GetViewPoint(const Camera& camera) const
 	return camera.GetViewTransform(model);
 }
 
-void Point::RenderSurroundingRect(QPainter* painter, const Camera& camera)
+void Point::RenderSurroundingRect(QPainter* painter, const Camera& camera) const
 {
 	const int padding = 10;
 	const QPointF viewPoint = GetViewPoint(camera);

@@ -80,10 +80,7 @@ Face::Face(ShapeId id, const QColor& color, const QVector<Line*>& lines) : Shape
 	for (Line* line : lines)
 	{
 		mPoints.append(line->GetStartPoint());
-
-		polygon << QPointF(line->GetStartPoint()->GetX(), line->GetStartPoint()->GetY());
 	}
-	mPolygon = polygon;
 }
 
 Face::Face(ShapeId id, const QColor& color, const QVector<Point*>& points) : Shape(id, color)
@@ -92,14 +89,11 @@ Face::Face(ShapeId id, const QColor& color, const QVector<Point*>& points) : Sha
 	for (Point* point : points)
 	{
 		mPoints.append(std::shared_ptr<Point>(point));
-		polygon << QPointF(point->GetCoord());
 	}
-
-	mPolygon = polygon;
 }
 
 // algorithm reference: https://stackoverflow.com/a/2922778
-bool Face::HitTest(qreal x, qreal y, const Camera& camera)
+bool Face::HitTest(qreal x, qreal y, const Camera& camera) const
 {
 	int ret = 0;
 
@@ -119,29 +113,23 @@ bool Face::HitTest(qreal x, qreal y, const Camera& camera)
 }
 
 // reference: https://www.bogotobogo.com/Qt/Qt5_QPainterPath_QPolygon.php
-void Face::Render(QPainter* painter, const Camera& camera)
-{
-	UpdatePolygon(camera);
-	painter->drawPolygon(mPolygon);
-
-	QBrush brush;
-	brush.setColor(GetColor());
-	brush.setStyle(Qt::SolidPattern);
-
-	QPainterPath path;
-	path.addPolygon(mPolygon);
-
-	painter->fillPath(path, brush);
-}
-
-void Face::UpdatePolygon(const Camera& camera)
+void Face::Render(QPainter* painter, const Camera& camera) const
 {
 	QPolygonF newPolygon;
 	for (std::shared_ptr<const Point> point : mPoints)
 	{
 		newPolygon << point->GetViewPoint(camera);
 	}
-	mPolygon = newPolygon;
+	painter->drawPolygon(newPolygon);
+
+	QBrush brush;
+	brush.setColor(GetColor());
+	brush.setStyle(Qt::SolidPattern);
+
+	QPainterPath path;
+	path.addPolygon(newPolygon);
+
+	painter->fillPath(path, brush);
 }
 
 void Face::Rotate(qreal angle, const QPointF& center)
@@ -197,7 +185,7 @@ QPointF Face::GetCenter() const
 	return { x / count, y / count };
 }
 
-void Face::RenderSurroundingRect(QPainter* painter, const Camera& camera)
+void Face::RenderSurroundingRect(QPainter* painter, const Camera& camera) const
 {
 	const int padding = 10;
 	const int limit = 1 << 20;

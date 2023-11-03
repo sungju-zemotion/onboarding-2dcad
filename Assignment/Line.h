@@ -27,10 +27,10 @@ public:
 		mEnd = point;
 	}
 
-	bool HitTest(qreal x, qreal y, const Camera& camera) override; // aabb(not right now) can be used instead
-	void Render(QPainter* painter, const Camera& camera) override;
+	bool HitTest(qreal x, qreal y, const Camera& camera) const override; // aabb(not right now) can be used instead
+	void Render(QPainter* painter, const Camera& camera) const override;
 
-	void RenderSurroundingRect(QPainter* painter, const Camera& camera) override;
+	void RenderSurroundingRect(QPainter* painter, const Camera& camera) const override;
 
 	void Rotate(qreal angle, const QPointF& center = { -1, -1 });
 	void Translate(const QPointF& move);

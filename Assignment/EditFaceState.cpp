@@ -1,6 +1,6 @@
 #include "SceneState.h"
 
-void EditFaceState::Render(QPainter* painter, const Camera& camera)
+void EditFaceState::Render(QPainter* painter, const Camera& camera) const
 {
 	SceneState::Render(painter, camera);
 	mFace->RenderSurroundingRect(painter, camera);

@@ -34,7 +34,7 @@ Line::Line(ShapeId id, const QColor& color, std::shared_ptr<Point> start, std::s
 	}
 }
 
-bool Line::HitTest(qreal x, qreal y, const Camera& camera)
+bool Line::HitTest(qreal x, qreal y, const Camera& camera) const
 {
 	const QPointF p1 = mStart->GetViewPoint(camera);
 	const QPointF p2 = mEnd->GetViewPoint(camera);
@@ -57,7 +57,7 @@ bool Line::HitTest(qreal x, qreal y, const Camera& camera)
 	return xIntersect - padding < 0 && 0 < xIntersect + padding;
 }
 
-void Line::Render(QPainter* painter, const Camera& camera)
+void Line::Render(QPainter* painter, const Camera& camera) const
 {
 	const QPointF startPoint = mStart->GetViewPoint(camera);
 	const QPointF endPoint = mEnd->GetViewPoint(camera);
@@ -125,7 +125,7 @@ QPointF Line::GetCenter() const
 	return QPointF{ (mStart->GetX() + mEnd->GetX()) / 2, (mStart->GetY() + mEnd->GetY()) / 2 };
 }
 
-void Line::RenderSurroundingRect(QPainter* painter, const Camera& camera)
+void Line::RenderSurroundingRect(QPainter* painter, const Camera& camera) const
 {
 	QPointF v1 = mEnd->GetViewPoint(camera) - mStart->GetViewPoint(camera);
 	const qreal length = std::sqrt(v1.x() * v1.x() + v1.y() * v1.y());

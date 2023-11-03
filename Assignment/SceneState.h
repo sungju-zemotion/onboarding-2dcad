@@ -23,8 +23,7 @@ class SceneState
 public:
 	virtual ~SceneState() = default;
 
-	virtual void Render(QPainter* painter, const Camera& camera);
-	// call Shape->Paint(transformation, this);
+	virtual void Render(QPainter* painter, const Camera& camera) const;
 
 	// common event handler
 	virtual void HandleMousePressEvent(QMouseEvent* event, const Camera& camera) = 0;
@@ -61,7 +60,7 @@ private:
 class EditPointState : public SceneState
 {
 public:
-	void Render(QPainter* painter, const Camera& camera) override;
+	void Render(QPainter* painter, const Camera& camera) const override;
 
 	void HandleMousePressEvent(QMouseEvent* event, const Camera& camera) override;
 	void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) override;
@@ -79,7 +78,7 @@ private:
 class EditLineState : public SceneState
 {
 public:
-	void Render(QPainter* painter, const Camera& camera) override;
+	void Render(QPainter* painter, const Camera& camera) const override;
 
 	void HandleMousePressEvent(QMouseEvent* event, const Camera& camera) override;
 	void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) override;
@@ -97,7 +96,7 @@ private:
 class EditFaceState : public SceneState
 {
 public:
-	void Render(QPainter* painter, const Camera& camera) override;
+	void Render(QPainter* painter, const Camera& camera) const override;
 
 	void HandleMousePressEvent(QMouseEvent* event, const Camera& camera) override;
 	void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) override;
@@ -115,7 +114,7 @@ private:
 class SelectLineState : public SceneState
 {
 public:
-	void Render(QPainter* painter, const Camera& camera) override;
+	void Render(QPainter* painter, const Camera& camera) const override;
 
 	void HandleMousePressEvent(QMouseEvent* event, const Camera& camera) override;
 	void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) override
@@ -129,7 +128,7 @@ public:
 class SelectFaceState : public SceneState
 {
 public:
-	void Render(QPainter* painter, const Camera& camera) override;
+	void Render(QPainter* painter, const Camera& camera) const override;
 
 	void HandleMousePressEvent(QMouseEvent* event, const Camera& camera) override;
 	void HandleMouseMoveEvent(QMouseEvent* event, const Camera& camera) override

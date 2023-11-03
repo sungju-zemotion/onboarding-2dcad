@@ -56,9 +56,9 @@ public:
 	virtual void ModelTranslate(const QPointF& move) = 0;
 
 	// render
-	virtual bool HitTest(qreal x, qreal y, const Camera& camera) = 0; // aabb(not right now) can be used instead
-	virtual void Render(QPainter* painter, const Camera& camera) = 0;
-	virtual void RenderSurroundingRect(QPainter* painter, const Camera& camera) = 0;
+	virtual bool HitTest(qreal x, qreal y, const Camera& camera) const = 0; // aabb(not right now) can be used instead
+	virtual void Render(QPainter* painter, const Camera& camera) const = 0;
+	virtual void RenderSurroundingRect(QPainter* painter, const Camera& camera) const = 0;
 
 protected:
 	Shape(ShapeId id, const QColor& color);
@@ -98,11 +98,11 @@ public:
 		return { mX, mY };
 	}
 
-	bool HitTest(qreal x, qreal y, const Camera& camera) override;
-	void Render(QPainter* painter, const Camera& camera) override;
+	bool HitTest(qreal x, qreal y, const Camera& camera) const override;
+	void Render(QPainter* painter, const Camera& camera) const override;
 
 	// TODO: implement the following
-	void RenderSurroundingRect(QPainter* painter, const Camera& camera) override;
+	void RenderSurroundingRect(QPainter* painter, const Camera& camera) const override;
 
 	void Rotate(qreal angle, const QPointF& center) override
 	{
